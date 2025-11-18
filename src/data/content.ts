@@ -91,4 +91,6 @@ export const brandingData: BrandingData = {
   deputyPhotoUrl: "https://i.imgur.com/Iar7slJ.jpeg",
   logoUrl: "https://i.imgur.com/rboK7rb.png",
   mascotUrl: "https://i.imgur.com/uZsZzkj.png",
+  // Disparando o primeiro deploy
 };
+
