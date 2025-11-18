@@ -1,0 +1,40 @@
+# Este é o "cérebro" do nosso robô de automação (GitHub Action)
+# Ele será executado automaticamente toda vez que você atualizar o código
+
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main # A automação roda quando houver mudanças na branch 'main'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest # O robô usará uma máquina virtual Linux
+    steps:
+      # 1. Baixa o código do seu repositório para a máquina virtual
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Instala o Node.js, a ferramenta essencial para construir o site
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Usa a versão 20 do Node.js
+
+      # 3. Instala todas as "peças" do nosso projeto (React, Vite, Tailwind)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Constrói o site, transformando o código em arquivos otimizados
+      - name: Build project
+        run: npm run build
+
+      # 5. Envia os arquivos prontos para o Firebase Hosting
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GABINETE_DIGITAL_B9284 }}'
+          channelId: live
+          projectId: gabinete-digital-b9284
